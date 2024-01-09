@@ -1,4 +1,4 @@
-package be.fresher_manage.model.dto;
+package com.freshermanage.model;
 
 
 import lombok.Getter;

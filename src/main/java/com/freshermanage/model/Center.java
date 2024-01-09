@@ -1,8 +1,7 @@
-package be.fresher_manage.model.dto;
+package com.freshermanage.model;
 
 
 import javax.persistence.*;
-import java.util.HashSet;
 import java.util.Set;
 
 @Entity
