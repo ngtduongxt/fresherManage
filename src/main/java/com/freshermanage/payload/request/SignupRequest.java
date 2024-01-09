@@ -45,19 +45,19 @@ public class SignupRequest {
         this.fullName = fullName;
     }
 
-    public boolean isUserStatus() {
-        return userStatus;
-    }
-
-    public void setUserStatus(boolean userStatus) {
-        this.userStatus = userStatus;
-    }
-
     public Set<String> getListRoles() {
         return listRoles;
     }
 
     public void setListRoles(Set<String> listRoles) {
         this.listRoles = listRoles;
+    }
+
+    public boolean isUserStatus() {
+        return userStatus;
+    }
+
+    public void setUserStatus(boolean userStatus) {
+        this.userStatus = userStatus;
     }
 }

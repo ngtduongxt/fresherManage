@@ -1,9 +1,7 @@
-package com.freshermanage.security;
+package com.freshermanage.config.security;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.freshermanage.model.Users;
-import lombok.AllArgsConstructor;
-import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,8 +10,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Data
-@AllArgsConstructor
+
 public class CustomUserDetails implements UserDetails {
     private Long userId;
     private String fullName;
@@ -42,6 +39,54 @@ public class CustomUserDetails implements UserDetails {
                 users.isUserStatus(),
                 listAuthorities
         );
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public boolean isUserStatus() {
+        return userStatus;
+    }
+
+    public void setUserStatus(boolean userStatus) {
+        this.userStatus = userStatus;
+    }
+
+    public void setAuthorities(Collection<? extends GrantedAuthority> authorities) {
+        this.authorities = authorities;
     }
 
     @Override
@@ -73,4 +118,15 @@ public class CustomUserDetails implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+    public CustomUserDetails(Long userId, String fullName, String userName, String password, String email, boolean userStatus, Collection<? extends GrantedAuthority> authorities) {
+        this.userId = userId;
+        this.fullName = fullName;
+        this.userName = userName;
+        this.password = password;
+        this.email = email;
+        this.userStatus = userStatus;
+        this.authorities = authorities;
+    }
+
 }

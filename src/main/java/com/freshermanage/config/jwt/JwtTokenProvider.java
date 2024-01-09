@@ -1,6 +1,6 @@
-package com.freshermanage.jwt;
+package com.freshermanage.config.jwt;
 
-import com.freshermanage.security.CustomUserDetails;
+import com.freshermanage.config.security.CustomUserDetails;
 import io.jsonwebtoken.*;
 import jdk.jpackage.internal.Log;
 import lombok.extern.slf4j.Slf4j;
@@ -11,7 +11,7 @@ import java.util.Date;
 @Slf4j
 @Component
 public class JwtTokenProvider {
-    private String JWT_SECRET = "VMOHoldings";
+    private String JWT_SECRET = "FresherManage";
     private int JWT_EXPIRATION = 86400000;
 
     public String generateToken(CustomUserDetails customUserDetails) {
@@ -40,12 +40,6 @@ public class JwtTokenProvider {
             return true;
         } catch (MalformedJwtException ex) {
             Log.error("Invalid JWT token");
-        } catch (ExpiredJwtException ex) {
-            log.error("Expired JWT token");
-        } catch (UnsupportedJwtException ex) {
-            log.error("Unsupported JWT Token");
-        } catch (IllegalArgumentException ex) {
-            log.error("JWT claims string is empty.");
         }
         return false;
     }

@@ -1,4 +1,4 @@
-package com.freshermanage.serviceImp;
+package com.freshermanage.service.serviceImp;
 
 import com.freshermanage.model.ERole;
 import com.freshermanage.model.Roles;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class RoleServiceImp implements RoleService {
+public class RoleServiceImpl implements RoleService {
     @Autowired
     private RoleRepository roleRepository;
 

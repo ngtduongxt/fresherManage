@@ -1,4 +1,4 @@
-package com.freshermanage.serviceImp;
+package com.freshermanage.service.serviceImp;
 
 import com.freshermanage.model.Users;
 import com.freshermanage.repository.UserRepository;
@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserServiceImp implements UserService {
+public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;

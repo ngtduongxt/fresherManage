@@ -1,4 +1,4 @@
-package com.freshermanage.security;
+package com.freshermanage.config.security;
 
 import com.freshermanage.model.Users;
 import com.freshermanage.repository.UserRepository;

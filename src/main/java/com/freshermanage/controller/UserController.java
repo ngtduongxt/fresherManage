@@ -1,6 +1,6 @@
 package com.freshermanage.controller;
 
-import com.freshermanage.jwt.JwtTokenProvider;
+import com.freshermanage.config.jwt.JwtTokenProvider;
 import com.freshermanage.model.ERole;
 import com.freshermanage.model.Roles;
 import com.freshermanage.model.Users;
@@ -8,7 +8,7 @@ import com.freshermanage.payload.request.LoginRequest;
 import com.freshermanage.payload.request.SignupRequest;
 import com.freshermanage.payload.response.JwtResponse;
 import com.freshermanage.payload.response.MessageResponse;
-import com.freshermanage.security.CustomUserDetails;
+import com.freshermanage.config.security.CustomUserDetails;
 import com.freshermanage.service.RoleService;
 import com.freshermanage.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/api/login")
+@RequestMapping("/users")
 public class UserController {
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -56,7 +56,7 @@ public class UserController {
         Set<String> strRole = signupRequest.getListRoles();
         Set<Roles> listRole = new HashSet<>();
         if (strRole == null) {
-            Roles userRole = roleService.findByRoleName(ERole.ROLE_FRESHER).orElseThrow(() -> new RuntimeException("Error: Role is not found"));
+            Roles userRole = roleService.findByRoleName(ERole.ROLE_MANAGE).orElseThrow(() -> new RuntimeException("Error: Role is not found"));
             listRole.add(userRole);
         } else {
             strRole.forEach(role -> {
@@ -65,16 +65,18 @@ public class UserController {
                         Roles adminRole = roleService.findByRoleName(ERole.ROLE_ADMIN)
                                 .orElseThrow(() -> new RuntimeException("Error: Role"));
                         listRole.add(adminRole);
-                    case "fresher":
-                        Roles fresherRole = roleService.findByRoleName(ERole.ROLE_FRESHER)
+                        break;
+                    case "manage":
+                        Roles fresherRole = roleService.findByRoleName(ERole.ROLE_MANAGE)
                                 .orElseThrow(() -> new RuntimeException("Error"));
                         listRole.add(fresherRole);
+                        break;
                 }
             });
         }
         user.setListRole(listRole);
-
-        return null;
+        userService.saveOrUpdate(user);
+        return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }
 
     @PostMapping("/signin")
@@ -83,7 +85,7 @@ public class UserController {
                 new UsernamePasswordAuthenticationToken(loginRequest.getUserName(), loginRequest.getPassword())
         );
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getDetails();
+        CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
         String jwt = tokenProvider.generateToken(customUserDetails);
         List<String> listRole = customUserDetails.getAuthorities().stream()
                 .map(item -> item.getAuthority()).collect(Collectors.toList());

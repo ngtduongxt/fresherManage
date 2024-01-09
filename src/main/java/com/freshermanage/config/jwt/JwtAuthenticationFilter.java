@@ -1,7 +1,6 @@
-package com.freshermanage.jwt;
+package com.freshermanage.config.jwt;
 
-import com.freshermanage.security.CustomUserDetailService;
-import lombok.extern.slf4j.Slf4j;
+import com.freshermanage.config.security.CustomUserDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,13 +16,13 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 
-@Slf4j
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Autowired
     private JwtTokenProvider jwtTokenProvider;
 
     @Autowired
     private CustomUserDetailService customUserDetailService;
+
 
     private String getJwtFromRequest(HttpServletRequest request) {
         String bearerToken = request.getHeader("Authorization");
@@ -48,7 +47,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 }
             }
         } catch (Exception e) {
-            log.error("Failed on set user authentication", e);
+            logger.error("Failed on set user authentication", e);
         }
         filterChain.doFilter(request, response);
     }
